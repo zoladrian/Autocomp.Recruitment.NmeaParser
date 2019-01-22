@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Autocomp.Nmea.Common")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Autocomp.Nmea.Common")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyCompany("Autocomp Management Sp. z o.o.")]
+[assembly: AssemblyProduct("Recruitment task")]
+[assembly: AssemblyCopyright("Copyright © Autocomp Management Sp. z o.o. 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
