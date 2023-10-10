@@ -1,9 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.271
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autocomp.Nmea.Common", "Autocomp.Nmea.Common\Autocomp.Nmea.Common.csproj", "{9DE3D7D7-B5D4-43C2-8C1B-D92B2BC5C46C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autocomp.Nmea.PrismApp", "Autocomp.Nmea.PrismApp\Autocomp.Nmea.PrismApp\Autocomp.Nmea.PrismApp.csproj", "{5D4594EF-5C73-41A1-973E-7583246F8F2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autocomp.Nmea.PrismApp.Core", "Autocomp.Nmea.PrismApp\Autocomp.Nmea.PrismApp.Core\Autocomp.Nmea.PrismApp.Core.csproj", "{83011CF8-5308-4C7E-9F2D-6542526C0F8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autocomp.Nmea.PrismApp.Modules.ModuleName", "Autocomp.Nmea.PrismApp\Modules\Autocomp.Nmea.PrismApp.Modules.ModuleName\Autocomp.Nmea.PrismApp.Modules.ModuleName.csproj", "{AC86A0F8-C568-493E-8956-F3B90D8FE864}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autocomp.Nmea.PrismApp.Services", "Autocomp.Nmea.PrismApp\Services\Autocomp.Nmea.PrismApp.Services\Autocomp.Nmea.PrismApp.Services.csproj", "{B98F9F6A-4ADD-440A-81FF-EE4C36D3620A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autocomp.Nmea.PrismApp.Services.Interfaces", "Autocomp.Nmea.PrismApp\Services\Autocomp.Nmea.PrismApp.Services.Interfaces\Autocomp.Nmea.PrismApp.Services.Interfaces.csproj", "{5BE25671-EA68-4895-AD17-66A4167B896A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autocomp.Nmea.PrismApp.Modules.ModuleName.Tests", "Autocomp.Nmea.PrismApp\Tests\Autocomp.Nmea.PrismApp.Modules.ModuleName.Tests\Autocomp.Nmea.PrismApp.Modules.ModuleName.Tests.csproj", "{F5DA4648-55FB-42FE-B7C3-B1B587428E0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +27,30 @@ Global
 		{9DE3D7D7-B5D4-43C2-8C1B-D92B2BC5C46C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DE3D7D7-B5D4-43C2-8C1B-D92B2BC5C46C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DE3D7D7-B5D4-43C2-8C1B-D92B2BC5C46C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D4594EF-5C73-41A1-973E-7583246F8F2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D4594EF-5C73-41A1-973E-7583246F8F2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D4594EF-5C73-41A1-973E-7583246F8F2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D4594EF-5C73-41A1-973E-7583246F8F2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83011CF8-5308-4C7E-9F2D-6542526C0F8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83011CF8-5308-4C7E-9F2D-6542526C0F8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83011CF8-5308-4C7E-9F2D-6542526C0F8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83011CF8-5308-4C7E-9F2D-6542526C0F8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC86A0F8-C568-493E-8956-F3B90D8FE864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC86A0F8-C568-493E-8956-F3B90D8FE864}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC86A0F8-C568-493E-8956-F3B90D8FE864}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC86A0F8-C568-493E-8956-F3B90D8FE864}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B98F9F6A-4ADD-440A-81FF-EE4C36D3620A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B98F9F6A-4ADD-440A-81FF-EE4C36D3620A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B98F9F6A-4ADD-440A-81FF-EE4C36D3620A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B98F9F6A-4ADD-440A-81FF-EE4C36D3620A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BE25671-EA68-4895-AD17-66A4167B896A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BE25671-EA68-4895-AD17-66A4167B896A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BE25671-EA68-4895-AD17-66A4167B896A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BE25671-EA68-4895-AD17-66A4167B896A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5DA4648-55FB-42FE-B7C3-B1B587428E0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5DA4648-55FB-42FE-B7C3-B1B587428E0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5DA4648-55FB-42FE-B7C3-B1B587428E0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5DA4648-55FB-42FE-B7C3-B1B587428E0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Prism.Unity" Version="8.1.97" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Autocomp.Nmea.PrismApp.Core\Autocomp.Nmea.PrismApp.Core.csproj" />
+    <ProjectReference Include="..\Modules\Autocomp.Nmea.PrismApp.Modules.ModuleName\Autocomp.Nmea.PrismApp.Modules.ModuleName.csproj" />
+    <ProjectReference Include="..\Services\Autocomp.Nmea.PrismApp.Services.Interfaces\Autocomp.Nmea.PrismApp.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\Services\Autocomp.Nmea.PrismApp.Services\Autocomp.Nmea.PrismApp.Services.csproj" />
+  </ItemGroup>
+</Project>
