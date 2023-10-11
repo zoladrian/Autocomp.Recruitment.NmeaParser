@@ -1,5 +1,4 @@
 ﻿using Autocomp.Nmea.PrismApp.Core.Mvvm;
-using Autocomp.Nmea.PrismApp.Services.Interfaces;
 using Prism.Regions;
 
 namespace Autocomp.Nmea.PrismApp.Modules.ModuleName.ViewModels
@@ -13,10 +12,9 @@ namespace Autocomp.Nmea.PrismApp.Modules.ModuleName.ViewModels
             set { SetProperty(ref _message, value); }
         }
 
-        public ViewAViewModel(IRegionManager regionManager, IMessageService messageService) :
+        public ViewAViewModel(IRegionManager regionManager) :
             base(regionManager)
         {
-            Message = messageService.GetMessage();
         }
 
         public override void OnNavigatedTo(NavigationContext navigationContext)
