@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9CE146B1-FBBE-48DA-9A15-F78E7B36BF11}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autocomp.Nmea.PrismApp.Modules.ModuleName.Tests", "Autocomp.Nmea.PrismApp\Tests\Autocomp.Nmea.PrismApp.Modules.ModuleName.Tests\Autocomp.Nmea.PrismApp.Modules.ModuleName.Tests.csproj", "{F00EC9C5-FB9A-446D-80A5-765C61D3DD92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autocomp.Nmea.Parsers.Tests", "Autocomp.Nmea.PrismApp\Tests\Autocomp.Nmea.PrismApp.Modules.ModuleName.Tests\Autocomp.Nmea.Parsers.Tests.csproj", "{F00EC9C5-FB9A-446D-80A5-765C61D3DD92}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{18AFFA0B-A5E9-4792-94D6-4AEB390B85AA}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autocomp.Nmea.PrismApp.Core", "Autocomp.Nmea.PrismApp\Autocomp.Nmea.PrismApp.Core\Autocomp.Nmea.PrismApp.Core.csproj", "{70C3999A-E9BB-428A-A393-E09EF0F5B24F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autocomp.Nmea.Parsers", "Autocomp.Nmea.Parsers\Autocomp.Nmea.Parsers.csproj", "{38AB32DA-74BB-4232-AD4C-FB82E965F2FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autocomp.Nmea.Models", "Autocomp.Nmea.Models\Autocomp.Nmea.Models.csproj", "{36DA9BAF-5816-4F90-9888-C14C3A5058DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,10 @@ Global
 		{38AB32DA-74BB-4232-AD4C-FB82E965F2FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38AB32DA-74BB-4232-AD4C-FB82E965F2FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38AB32DA-74BB-4232-AD4C-FB82E965F2FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36DA9BAF-5816-4F90-9888-C14C3A5058DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36DA9BAF-5816-4F90-9888-C14C3A5058DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36DA9BAF-5816-4F90-9888-C14C3A5058DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36DA9BAF-5816-4F90-9888-C14C3A5058DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
