@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Autocomp.Nmea.Common\Autocomp.Nmea.Common.csproj" />
+    <ProjectReference Include="..\Autocomp.Nmea.Models\Autocomp.Nmea.Models.csproj" />
   </ItemGroup>
 
 </Project>
