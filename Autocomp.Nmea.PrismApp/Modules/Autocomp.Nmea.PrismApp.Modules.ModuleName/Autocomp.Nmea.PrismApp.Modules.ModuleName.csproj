@@ -8,6 +8,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Autocomp.Nmea.PrismApp.Core\Autocomp.Nmea.PrismApp.Core.csproj" />
-    <ProjectReference Include="..\..\Services\Autocomp.Nmea.PrismApp.Services.Interfaces\Autocomp.Nmea.PrismApp.Services.Interfaces.csproj" />
   </ItemGroup>
 </Project>
