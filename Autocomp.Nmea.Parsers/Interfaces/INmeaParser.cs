@@ -2,9 +2,9 @@
 
 namespace Autocomp.Nmea.Parsers.Interfaces
 {
-    public interface INmeaParser
+    public interface INmeaParser<T>
     {
         bool CanParse(string header);
-        object Parse(NmeaMessage message);
+        T Parse(NmeaMessage message);
     }
 }

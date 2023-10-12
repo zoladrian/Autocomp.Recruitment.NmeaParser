@@ -1,6 +1,6 @@
 ﻿using Autocomp.Nmea.Common;
 using Autocomp.Nmea.Models;
-using Autocomp.Nmea.Parsers;
+using Autocomp.Nmea.Parsers.Interfaces;
 using System;
 using System.Globalization;
 using Xunit;
@@ -27,19 +27,17 @@ public class GLLParserTests
     [Fact]
     public void Parse_ValidGLLMessage_ReturnsCorrectData()
     {
-        var parser = new GLLParser();
-        var message = new NmeaMessage("GLL", new string[] {
-            "4812.11", "N", "12311.12", "W", "125947", "A", "A"
-        });
+        INmeaParser<GLLMessageData> parser = new GLLParser();
+        var message = new NmeaMessage("$GPGLL, 3953.88008971, N, 10506.75318910, W, 034138.00, A, D * 7A");
 
-        var result = (GLLMessageData)parser.Parse(message);
+        GLLMessageData result = parser.Parse(message);
 
-        Assert.Equal(4812.11, result.Latitude);
+        Assert.Equal(3953.88008971, result.Latitude);
         Assert.Equal(LatitudeDirection.N, result.LatitudeDirection);
-        Assert.Equal(12311.12, result.Longitude);
+        Assert.Equal(10506.75318910, result.Longitude);
         Assert.Equal(LongitudeDirection.W, result.LongitudeDirection);
-        Assert.Equal(DateTime.ParseExact("125947", "HHmmss", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal), result.UTCTime);
+        Assert.Equal(DateTime.ParseExact("034138.00", "HHmmss.ff", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal), result.UTCTime);
         Assert.Equal(Status.A, result.Status);
-        Assert.Equal(ModeIndicator.A, result.ModeIndicator);
+        Assert.Equal(ModeIndicator.D, result.ModeIndicator);
     }
 }

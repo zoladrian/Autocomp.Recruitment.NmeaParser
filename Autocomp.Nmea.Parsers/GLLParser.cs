@@ -1,41 +1,70 @@
 ﻿using Autocomp.Nmea.Common;
 using Autocomp.Nmea.Models;
 using Autocomp.Nmea.Parsers.Interfaces;
-using System.Globalization;
 using static Autocomp.Nmea.Models.NmeaEnums.GLLEnums;
+using System.Globalization;
 
-namespace Autocomp.Nmea.Parsers
+public class GLLParser : INmeaParser<GLLMessageData>
 {
-    public class GLLParser : INmeaParser
+    public bool CanParse(string header)
     {
-        public bool CanParse(string header)
-        {
-            return header == "GLL";
-        }
+        return header == "GLL";
+    }
 
-        public object Parse(NmeaMessage message)
-        {
-            var fields = message.Fields;
+    public GLLMessageData Parse(NmeaMessage message)
+    {
+        var fields = message.Fields;
+        var latitude = ParseLatitude(fields[0]);
+        var latitudeDirection = ParseLatitudeDirection(fields[1]);
+        var longitude = ParseLongitude(fields[2]);
+        var longitudeDirection = ParseLongitudeDirection(fields[3]);
+        var utcTime = ParseUTCTime(fields[4]);
+        var status = ParseStatus(fields[5]);
+        var modeIndicator = ParseModeIndicator(fields[6]);
 
-            double latitude = double.Parse(fields[0], CultureInfo.InvariantCulture);
-            LatitudeDirection latitudeDirection = (LatitudeDirection)Enum.Parse(typeof(LatitudeDirection), fields[1]);
-            double longitude = double.Parse(fields[2], CultureInfo.InvariantCulture);
-            LongitudeDirection longitudeDirection = (LongitudeDirection)Enum.Parse(typeof(LongitudeDirection), fields[3]);
+        return new GLLMessageData(
+            latitude,
+            latitudeDirection,
+            longitude,
+            longitudeDirection,
+            utcTime,
+            status,
+            modeIndicator
+        );
+    }
 
-            // póki co zakładam że czas ma format HHmmss
-            DateTime utcTime = DateTime.ParseExact("125947", "HHmmss", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
-            Status status = (Status)Enum.Parse(typeof(Status), fields[5]);
-            ModeIndicator modeIndicator = (ModeIndicator)Enum.Parse(typeof(ModeIndicator), fields[6]);
+    private double ParseLatitude(string field)
+    {
+        return double.Parse(field, CultureInfo.InvariantCulture);
+    }
 
-            return new GLLMessageData(
-                latitude,
-                latitudeDirection,
-                longitude,
-                longitudeDirection,
-                utcTime,
-                status,
-                modeIndicator
-            );
-        }
+    private LatitudeDirection ParseLatitudeDirection(string field)
+    {
+        return (LatitudeDirection)Enum.Parse(typeof(LatitudeDirection), field);
+    }
+
+    private double ParseLongitude(string field)
+    {
+        return double.Parse(field, CultureInfo.InvariantCulture);
+    }
+
+    private LongitudeDirection ParseLongitudeDirection(string field)
+    {
+        return (LongitudeDirection)Enum.Parse(typeof(LongitudeDirection), field);
+    }
+
+    private DateTime ParseUTCTime(string field)
+    {
+        return DateTime.ParseExact(field.Trim(), "HHmmss.ff", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
+    }
+
+    private Status ParseStatus(string field)
+    {
+        return (Status)Enum.Parse(typeof(Status), field);
+    }
+
+    private ModeIndicator ParseModeIndicator(string field)
+    {
+        return (ModeIndicator)Enum.Parse(typeof(ModeIndicator), field.Trim()[0].ToString());
     }
 }
