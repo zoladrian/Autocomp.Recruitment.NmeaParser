@@ -1,6 +1,8 @@
 ﻿using Autocomp.Nmea.Common;
 using Autocomp.Nmea.Models;
 using Autocomp.Nmea.Parsers.Interfaces;
+using Autocomp.Nmea.Parsers.Validators;
+using FluentValidation;
 using System.Globalization;
 using static Autocomp.Nmea.Models.NmeaEnums.MWVEnums;
 
@@ -8,53 +10,75 @@ namespace Autocomp.Nmea.Parsers
 {
     public class MWVParser : INmeaParser<MWVMessageData>
     {
+        private readonly IValidator<MWVMessageData> validator;
+        private readonly IFieldParser<double> doubleFieldParser;
+        private readonly IFieldParser<WindSpeedUnits> windSpeedUnitsParser;
+        private readonly IFieldParser<Reference> referenceParser;
+        private readonly IFieldParser<Status> statusParser;
+
+        public MWVParser(
+            IValidator<MWVMessageData> validator,
+            IFieldParser<double> doubleFieldParser,
+            IFieldParser<WindSpeedUnits> windSpeedUnitsParser,
+            IFieldParser<Reference> referenceParser,
+            IFieldParser<Status> statusParser)
+        {
+            this.validator = validator;
+            this.doubleFieldParser = doubleFieldParser;
+            this.windSpeedUnitsParser = windSpeedUnitsParser;
+            this.referenceParser = referenceParser;
+            this.statusParser = statusParser;
+        }
+
         public bool CanParse(string header)
         {
             return header == "MWV";
         }
 
-        public MWVMessageData Parse(NmeaMessage message)
+        public ParseResult<MWVMessageData> Parse(NmeaMessage message)
         {
             var fields = message.Fields;
-            var windAngle = ParseWindAngle(fields[0]);
-            var reference = ParseReference(fields[1]);
-            var windSpeed = ParseWindSpeed(fields[2]);
-            var windSpeedUnits = ParseWindSpeedUnits(fields[3]);
-            var status = ParseStatus(fields[4]);
 
-            return new MWVMessageData(
+            if (!doubleFieldParser.TryParse(fields[0], out var windAngle))
+            {
+                return new ParseResult<MWVMessageData> { Success = false, ErrorMessage = "Invalid wind angle" };
+            }
+
+            if (!referenceParser.TryParse(fields[1], out var reference))
+            {
+                return new ParseResult<MWVMessageData> { Success = false, ErrorMessage = "Invalid reference" };
+            }
+
+            if (!doubleFieldParser.TryParse(fields[2], out var windSpeed))
+            {
+                return new ParseResult<MWVMessageData> { Success = false, ErrorMessage = "Invalid wind speed" };
+            }
+
+            if (!windSpeedUnitsParser.TryParse(fields[3], out var windSpeedUnits))
+            {
+                return new ParseResult<MWVMessageData> { Success = false, ErrorMessage = "Invalid wind speed units" };
+            }
+
+            if (!statusParser.TryParse(fields[4], out var status))
+            {
+                return new ParseResult<MWVMessageData> { Success = false, ErrorMessage = "Invalid status" };
+            }
+
+            var mwvMessageData = new MWVMessageData(
                 windAngle,
                 reference,
                 windSpeed,
                 windSpeedUnits,
-                status
-            );
-        }
+                status);
 
-        private double ParseWindAngle(string field)
-        {
-            return double.Parse(field, CultureInfo.InvariantCulture);
-        }
+            var validationResult = validator.Validate(mwvMessageData);
 
-        private WindSpeedUnits ParseWindSpeedUnits(string field)
-        {
-            return (WindSpeedUnits)Enum.Parse(typeof(WindSpeedUnits), field);
-        }
+            if (!validationResult.IsValid)
+            {
+                return new ParseResult<MWVMessageData> { Success = false, ErrorMessage = validationResult.ToString() };
+            }
 
-        private double ParseWindSpeed(string field)
-        {
-            return double.Parse(field, CultureInfo.InvariantCulture);
-        }
-
-        private Reference ParseReference(string field)
-        {
-            return (Reference)Enum.Parse(typeof(Reference), field);
-        }
-
-        private Status ParseStatus(string field)
-        {
-            return (Status)Enum.Parse(typeof(Status), field.Trim()[0].ToString());
+            return new ParseResult<MWVMessageData> { Success = true, Data = mwvMessageData };
         }
     }
-
 }
