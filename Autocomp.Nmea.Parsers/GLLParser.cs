@@ -1,7 +1,6 @@
 ﻿using Autocomp.Nmea.Common;
 using Autocomp.Nmea.Models;
 using Autocomp.Nmea.Parsers.Interfaces;
-using Autocomp.Nmea.Parsers.Validators;
 using FluentValidation;
 using static Autocomp.Nmea.Models.NmeaEnums.GLLEnums;
 
@@ -98,6 +97,5 @@ namespace Autocomp.Nmea.Parsers
 
             return new ParseResult<GLLMessageData> { Success = true, Data = gllMessageData };
         }
-
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Autocomp.Nmea.Common;
 using Autocomp.Nmea.Models;
 using Autocomp.Nmea.Parsers.FieldParsers;
-using Autocomp.Nmea.Parsers.Interfaces;
 using FluentValidation;
 using FluentValidation.Results;
 using Moq;
