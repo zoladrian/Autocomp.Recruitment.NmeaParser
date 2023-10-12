@@ -5,16 +5,16 @@ namespace Autocomp.Nmea.Models
     public class MWVMessageData
     {
         public double WindAngle { get; set; }
-        public WindSpeedUnits WindSpeedUnits { get; set; }
-        public double WindSpeed { get; set; }
         public Reference Reference { get; set; }
+        public double WindSpeed { get; set; }
+        public WindSpeedUnits WindSpeedUnits { get; set; }
         public Status Status { get; set; }
 
         public MWVMessageData(
             double windAngle,
-            WindSpeedUnits windSpeedUnits,
-            double windSpeed,
             Reference reference,
+            double windSpeed,
+            WindSpeedUnits windSpeedUnits,
             Status status
         )
         {
