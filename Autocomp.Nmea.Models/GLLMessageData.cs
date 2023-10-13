@@ -33,9 +33,9 @@ namespace Autocomp.Nmea.Models
         }
         public override string ToString()
         {
-            return $"Latitude: {Latitude}\n" +
-                   $"Longitude: {Longitude}\n" +
-                   $"UTCTime: {UTCTime}\n" +
+            return $"Latitude:{LatitudeDirection} {Latitude}\n" +
+                   $"Longitude: {LongitudeDirection} {Longitude}\n" +
+                   $"UTCTime: {UTCTime.TimeOfDay}\n" +
                    $"Status: {Status.ToDescription()}\n" +
                    $"ModeIndicator: {ModeIndicator.ToDescription()}";
         }

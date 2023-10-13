@@ -29,8 +29,7 @@ namespace Autocomp.Nmea.Models
         {
             return $"WindAngle: {WindAngle}\n" +
                    $"Reference: {Reference.ToDescription()}\n" +
-                   $"WindSpeed: {WindSpeed}\n" +
-                   $"WindSpeedUnits: {WindSpeedUnits.ToDescription()}\n" +
+                   $"WindSpeed: {WindSpeed} { WindSpeedUnits.ToDescription()}\n" +
                    $"Status: {Status.ToDescription()}";
         }
 
