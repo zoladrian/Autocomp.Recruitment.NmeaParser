@@ -2,6 +2,7 @@
 using Autocomp.Nmea.Models;
 using Autocomp.Nmea.Parsers.Interfaces;
 using FluentValidation;
+using System.Text.RegularExpressions;
 using static Autocomp.Nmea.Models.NmeaEnums.GLLEnums;
 
 namespace Autocomp.Nmea.Parsers
@@ -39,7 +40,7 @@ namespace Autocomp.Nmea.Parsers
         /// </summary>
         public bool CanParse(string header)
         {
-            return header == "GLL";
+            return Regex.IsMatch(header, @"^\$..GLL");
         }
         /// <summary>
         /// Przetwarza wiadomość NMEA na obiekt danych GLL.
@@ -83,10 +84,14 @@ namespace Autocomp.Nmea.Parsers
                 return new ParseResult<GLLMessageData> { Success = false, ErrorMessage = "Invalid mode indicator" };
             }
 
+            // konwertowanie latitude i longitude do wartości dziesiętnych
+            double decimalLatitude = Math.Floor(latitude / 100) + (latitude % 100) / 60;
+            double decimalLongitude = Math.Floor(longitude / 100) + (longitude % 100) / 60;
+
             var gllMessageData = new GLLMessageData(
-                latitude,
+                decimalLatitude,
                 latitudeDirection,
-                longitude,
+                decimalLongitude,
                 longitudeDirection,
                 utcTime,
                 status,

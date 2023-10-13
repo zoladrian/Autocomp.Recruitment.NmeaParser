@@ -4,6 +4,7 @@ using Autocomp.Nmea.Parsers.Interfaces;
 using Autocomp.Nmea.Parsers.Validators;
 using FluentValidation;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using static Autocomp.Nmea.Models.NmeaEnums.MWVEnums;
 
 namespace Autocomp.Nmea.Parsers
@@ -34,7 +35,7 @@ namespace Autocomp.Nmea.Parsers
         /// </summary>
         public bool CanParse(string header)
         {
-            return header == "MWV";
+            return Regex.IsMatch(header, @"^\$..MWV");
         }
 
         /// <summary>
