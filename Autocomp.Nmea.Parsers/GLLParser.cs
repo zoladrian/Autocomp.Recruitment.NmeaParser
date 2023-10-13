@@ -34,12 +34,16 @@ namespace Autocomp.Nmea.Parsers
             this.statusParser = statusParser;
             this.modeIndicatorParser = modeIndicatorParser;
         }
-
+        /// <summary>
+        /// Sprawdza czy wiadomość może być przetworzona przez ten parser.
+        /// </summary>
         public bool CanParse(string header)
         {
             return header == "GLL";
         }
-
+        /// <summary>
+        /// Przetwarza wiadomość NMEA na obiekt danych GLL.
+        /// </summary>
         public ParseResult<GLLMessageData> Parse(NmeaMessage message)
         {
             var fields = message.Fields;

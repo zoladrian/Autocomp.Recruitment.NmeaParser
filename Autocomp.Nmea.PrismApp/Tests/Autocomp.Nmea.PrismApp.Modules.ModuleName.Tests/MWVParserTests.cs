@@ -22,13 +22,7 @@ namespace Autocomp.Nmea.Parsers.Tests
         [Fact]
         public void CanParse_ValidMWVHeader_ReturnsTrue()
         {
-            var parser = new MWVParser(
-                mockValidator.Object,
-                new DoubleFieldParser(),
-                new EnumFieldParser<WindSpeedUnits>(),
-                new EnumFieldParser<Reference>(),
-                new EnumFieldParser<Status>()
-            );
+            var parser = CreateMWVParser();
 
             bool result = parser.CanParse("MWV");
 
@@ -38,23 +32,14 @@ namespace Autocomp.Nmea.Parsers.Tests
         [Fact]
         public void Parse_ValidMWVMessage_ReturnsCorrectData()
         {
-            // Arrange
             mockValidator.Setup(x => x.Validate(It.IsAny<MWVMessageData>())).Returns(new ValidationResult());
 
-            var parser = new MWVParser(
-                mockValidator.Object,
-                new DoubleFieldParser(),
-                new EnumFieldParser<WindSpeedUnits>(),
-                new EnumFieldParser<Reference>(),
-                new EnumFieldParser<Status>()
-            );
+            var parser = CreateMWVParser();
 
             var message = new NmeaMessage("$WIMWV, 320, R, 15.0, M, A * 0B");
 
-            // Act
             var result = parser.Parse(message);
 
-            // Assert
             Assert.True(result.Success);
             Assert.Equal(320.0, result.Data.WindAngle);
             Assert.Equal(Reference.R, result.Data.Reference);
@@ -66,7 +51,6 @@ namespace Autocomp.Nmea.Parsers.Tests
         [Fact]
         public void Parse_ValidatorFails_ReturnsError()
         {
-            // Arrange
             var validationFailures = new List<ValidationFailure>
             {
                 new ValidationFailure("SomeProperty", "Some error")
@@ -74,22 +58,75 @@ namespace Autocomp.Nmea.Parsers.Tests
 
             mockValidator.Setup(x => x.Validate(It.IsAny<MWVMessageData>())).Returns(new ValidationResult(validationFailures));
 
-            var parser = new MWVParser(
+            var parser = CreateMWVParser();
+
+            var message = new NmeaMessage("$WIMWV, 320, R, 15.0, M, A * 0B");
+
+            var result = parser.Parse(message);
+
+            Assert.False(result.Success);
+            Assert.Equal("Some error", result.ErrorMessage);
+        }
+
+        [Fact]
+        public void Parse_InvalidWindAngleField_ReturnsError()
+        {
+            var parser = CreateMWVParser();
+            var message = new NmeaMessage("$WIMWV, INVALID, R, 15.0, M, A * 0B");
+            var result = parser.Parse(message);
+            Assert.False(result.Success);
+            Assert.Equal("Invalid wind angle", result.ErrorMessage);
+        }
+
+        [Fact]
+        public void Parse_InvalidReferenceField_ReturnsError()
+        {
+            var parser = CreateMWVParser();
+            var message = new NmeaMessage("$WIMWV, 320, INVALID, 15.0, M, A * 0B");
+            var result = parser.Parse(message);
+            Assert.False(result.Success);
+            Assert.Equal("Invalid reference", result.ErrorMessage);
+        }
+
+        [Fact]
+        public void Parse_InvalidWindSpeedField_ReturnsError()
+        {
+            var parser = CreateMWVParser();
+            var message = new NmeaMessage("$WIMWV, 320, R, INVALID, M, A * 0B");
+            var result = parser.Parse(message);
+            Assert.False(result.Success);
+            Assert.Equal("Invalid wind speed", result.ErrorMessage);
+        }
+
+        [Fact]
+        public void Parse_InvalidWindSpeedUnitsField_ReturnsError()
+        {
+            var parser = CreateMWVParser();
+            var message = new NmeaMessage("$WIMWV, 320, R, 15.0, INVALID, A * 0B");
+            var result = parser.Parse(message);
+            Assert.False(result.Success);
+            Assert.Equal("Invalid wind speed units", result.ErrorMessage);
+        }
+
+        [Fact]
+        public void Parse_InvalidStatusField_ReturnsError()
+        {
+            var parser = CreateMWVParser();
+            var message = new NmeaMessage("$WIMWV, 320, R, 15.0, M, INVALID * 0B");
+            var result = parser.Parse(message);
+            Assert.False(result.Success);
+            Assert.Equal("Invalid status", result.ErrorMessage);
+        }
+
+        private MWVParser CreateMWVParser()
+        {
+            return new MWVParser(
                 mockValidator.Object,
                 new DoubleFieldParser(),
                 new EnumFieldParser<WindSpeedUnits>(),
                 new EnumFieldParser<Reference>(),
                 new EnumFieldParser<Status>()
             );
-
-            var message = new NmeaMessage("$WIMWV, 320, R, 15.0, M, A * 0B");
-
-            // Act
-            var result = parser.Parse(message);
-
-            // Assert
-            Assert.False(result.Success);
-            Assert.Equal("Some error", result.ErrorMessage);
         }
     }
 }
