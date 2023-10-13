@@ -1,6 +1,8 @@
 ﻿using Autocomp.Nmea.Common;
 using Autocomp.Nmea.Models;
+using Autocomp.Nmea.Parsers.FieldParsers;
 using Autocomp.Nmea.Parsers.Interfaces;
+using Autocomp.Nmea.Parsers.Utilities;
 using FluentValidation;
 using System.Text.RegularExpressions;
 using static Autocomp.Nmea.Models.NmeaEnums.GLLEnums;
@@ -10,7 +12,7 @@ namespace Autocomp.Nmea.Parsers
     public class GLLParser : INmeaParser<GLLMessageData>
     {
         private readonly IValidator<GLLMessageData> validator;
-        private readonly IFieldParser<double> doubleFieldParser;
+        private readonly IFieldParser<decimal> decimalFieldParser;
         private readonly IFieldParser<DateTime> dateTimeFieldParser;
         private readonly IFieldParser<LatitudeDirection> latitudeDirectionParser;
         private readonly IFieldParser<LongitudeDirection> longitudeDirectionParser;
@@ -19,7 +21,7 @@ namespace Autocomp.Nmea.Parsers
 
         public GLLParser(
             IValidator<GLLMessageData> validator,
-            IFieldParser<double> doubleFieldParser,
+            IFieldParser<decimal> decimalFieldParser,
             IFieldParser<DateTime> dateTimeFieldParser,
             IFieldParser<LatitudeDirection> latitudeDirectionParser,
             IFieldParser<LongitudeDirection> longitudeDirectionParser,
@@ -28,7 +30,7 @@ namespace Autocomp.Nmea.Parsers
             )
         {
             this.validator = validator;
-            this.doubleFieldParser = doubleFieldParser;
+            this.decimalFieldParser = decimalFieldParser;
             this.dateTimeFieldParser = dateTimeFieldParser;
             this.latitudeDirectionParser = latitudeDirectionParser;
             this.longitudeDirectionParser = longitudeDirectionParser;
@@ -49,7 +51,7 @@ namespace Autocomp.Nmea.Parsers
         {
             var fields = message.Fields;
 
-            if (!doubleFieldParser.TryParse(fields[0], out var latitude))
+            if (!decimalFieldParser.TryParse(fields[0], out var latitude))
             {
                 return new ParseResult<GLLMessageData> { Success = false, ErrorMessage = "Invalid latitude value" };
             }
@@ -59,7 +61,7 @@ namespace Autocomp.Nmea.Parsers
                 return new ParseResult<GLLMessageData> { Success = false, ErrorMessage = "Invalid latitude direction" };
             }
 
-            if (!doubleFieldParser.TryParse(fields[2], out var longitude))
+            if (!decimalFieldParser.TryParse(fields[2], out var longitude))
             {
                 return new ParseResult<GLLMessageData> { Success = false, ErrorMessage = "Invalid longitude value" };
             }
@@ -84,14 +86,16 @@ namespace Autocomp.Nmea.Parsers
                 return new ParseResult<GLLMessageData> { Success = false, ErrorMessage = "Invalid mode indicator" };
             }
 
-            // konwertowanie latitude i longitude do wartości dziesiętnych
-            double decimalLatitude = Math.Floor(latitude / 100) + (latitude % 100) / 60;
-            double decimalLongitude = Math.Floor(longitude / 100) + (longitude % 100) / 60;
+            // konwertowanie latitude i longitude do dziesiętnych wartości stopni i minut kątowych
+            decimal decimalLatitude = NmeaUtilities.ConvertToDecimalDegrees(latitude);
+            decimal decimalLongitude = NmeaUtilities.ConvertToDecimalDegrees(longitude);
+
+
 
             var gllMessageData = new GLLMessageData(
-                decimalLatitude,
+                (double)decimalLatitude,
                 latitudeDirection,
-                decimalLongitude,
+                (double)decimalLongitude,
                 longitudeDirection,
                 utcTime,
                 status,

@@ -36,13 +36,13 @@ namespace Autocomp.Nmea.PrismApp
             containerRegistry.Register<IValidator<MWVMessageData>, MWVMessageDataValidator>();
 
             // Rejestracja parserów dla różnych typów pól
-            containerRegistry.Register<IFieldParser<double>, DoubleFieldParser>();
             containerRegistry.Register<IFieldParser<DateTime>, DateTimeFieldParser>();
             containerRegistry.Register<IFieldParser<LatitudeDirection>, EnumFieldParser<LatitudeDirection>>();
             containerRegistry.Register<IFieldParser<LongitudeDirection>, EnumFieldParser<LongitudeDirection>>();
             containerRegistry.Register<IFieldParser<Models.NmeaEnums.MWVEnums.Status>, EnumFieldParser<Models.NmeaEnums.MWVEnums.Status>>();
             containerRegistry.Register<IFieldParser<ModeIndicator>, EnumFieldParser<ModeIndicator>>();
             containerRegistry.Register<IFieldParser<double>, DoubleFieldParser>();
+            containerRegistry.Register<IFieldParser<decimal>, DecimalFieldParser>();
             containerRegistry.Register<IFieldParser<WindSpeedUnits>, EnumFieldParser<WindSpeedUnits>>();
             containerRegistry.Register<IFieldParser<Reference>, EnumFieldParser<Reference>>();
             containerRegistry.Register<IFieldParser<Models.NmeaEnums.GLLEnums.Status>, EnumFieldParser<Models.NmeaEnums.GLLEnums.Status>>();

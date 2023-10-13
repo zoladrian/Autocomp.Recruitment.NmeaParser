@@ -4,6 +4,7 @@ using Autocomp.Nmea.Parsers.FieldParsers;
 using FluentValidation;
 using FluentValidation.Results;
 using Moq;
+using System;
 using System.Collections.Generic;
 using Xunit;
 using static Autocomp.Nmea.Models.NmeaEnums.GLLEnums;
@@ -13,7 +14,7 @@ namespace Autocomp.Nmea.Parsers.Tests
     public class GLLParserTests
     {
         private readonly Mock<IValidator<GLLMessageData>> mockValidator;
-
+        private const double Tolerance = 0.000001;
         public GLLParserTests()
         {
             mockValidator = new Mock<IValidator<GLLMessageData>>();
@@ -24,7 +25,7 @@ namespace Autocomp.Nmea.Parsers.Tests
         {
             var parser = CreateGLLParser();
 
-            bool result = parser.CanParse("GLL");
+            bool result = parser.CanParse("$GPGLL");
 
             Assert.True(result);
         }
@@ -41,9 +42,9 @@ namespace Autocomp.Nmea.Parsers.Tests
             var result = parser.Parse(message);
 
             Assert.True(result.Success);
-            Assert.Equal(3953.88008971, result.Data.Latitude);
+            AssertWithinTolerance(39.89800149516667, result.Data.Latitude);
             Assert.Equal(LatitudeDirection.N, result.Data.LatitudeDirection);
-            Assert.Equal(10506.75318910, result.Data.Longitude);
+            AssertWithinTolerance(105.11255315166667, result.Data.Longitude);
             Assert.Equal(LongitudeDirection.W, result.Data.LongitudeDirection);
 
             //UTCTime check
@@ -158,12 +159,18 @@ namespace Autocomp.Nmea.Parsers.Tests
             Assert.False(result.Success);
             Assert.Equal("Invalid mode indicator", result.ErrorMessage);
         }
-
+        /// <summary>
+        /// Sprawdza czy dana wartość mieści się w tolerancji błędu
+        /// </summary>
+        private void AssertWithinTolerance(double expected, double actual)
+        {
+            Assert.True(Math.Abs(expected - actual) < Tolerance, $"Expected {expected} but got {actual}.");
+        }
         private GLLParser CreateGLLParser()
         {
             return new GLLParser(
                 mockValidator.Object,
-                new DoubleFieldParser(),
+                new DecimalFieldParser(),
                 new DateTimeFieldParser(),
                 new EnumFieldParser<LatitudeDirection>(),
                 new EnumFieldParser<LongitudeDirection>(),

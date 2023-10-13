@@ -24,7 +24,7 @@ namespace Autocomp.Nmea.Parsers.Tests
         {
             var parser = CreateMWVParser();
 
-            bool result = parser.CanParse("MWV");
+            bool result = parser.CanParse("$SLMWV");
 
             Assert.True(result);
         }
