@@ -50,7 +50,7 @@ namespace Autocomp.Nmea.PrismApp
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
-            moduleCatalog.AddModule<ModuleNameModule>();
+            moduleCatalog.AddModule<ParserModule>();
         }
     }
 }

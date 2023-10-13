@@ -6,23 +6,23 @@ using Prism.Regions;
 
 namespace Autocomp.Nmea.PrismApp.Modules.ModuleName
 {
-    public class ModuleNameModule : IModule
+    public class ParserModule : IModule
     {
         private readonly IRegionManager _regionManager;
 
-        public ModuleNameModule(IRegionManager regionManager)
+        public ParserModule(IRegionManager regionManager)
         {
             _regionManager = regionManager;
         }
 
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, "ViewA");
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "ParserView");
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<ViewA>();
+            containerRegistry.RegisterForNavigation<ParserView>();
         }
     }
 }

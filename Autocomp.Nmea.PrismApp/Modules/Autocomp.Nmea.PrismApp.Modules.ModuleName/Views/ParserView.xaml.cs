@@ -18,9 +18,9 @@ namespace Autocomp.Nmea.PrismApp.Modules.ModuleName.Views
     /// <summary>
     /// Interaction logic for ViewA.xaml
     /// </summary>
-    public partial class ViewA : UserControl
+    public partial class ParserView : UserControl
     {
-        public ViewA()
+        public ParserView()
         {
             InitializeComponent();
         }

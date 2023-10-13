@@ -3,7 +3,7 @@ using Prism.Regions;
 
 namespace Autocomp.Nmea.PrismApp.Modules.ModuleName.ViewModels
 {
-    public class ViewAViewModel : RegionViewModelBase
+    public class ParserViewModel : RegionViewModelBase
     {
         private string _message;
         public string Message
@@ -12,7 +12,7 @@ namespace Autocomp.Nmea.PrismApp.Modules.ModuleName.ViewModels
             set { SetProperty(ref _message, value); }
         }
 
-        public ViewAViewModel(IRegionManager regionManager) :
+        public ParserViewModel(IRegionManager regionManager) :
             base(regionManager)
         {
         }

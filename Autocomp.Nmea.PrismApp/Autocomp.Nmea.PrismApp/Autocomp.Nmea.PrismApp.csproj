@@ -10,6 +10,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Autocomp.Nmea.Parsers\Autocomp.Nmea.Parsers.csproj" />
     <ProjectReference Include="..\Autocomp.Nmea.PrismApp.Core\Autocomp.Nmea.PrismApp.Core.csproj" />
-    <ProjectReference Include="..\Modules\Autocomp.Nmea.PrismApp.Modules.ModuleName\Autocomp.Nmea.PrismApp.Modules.ModuleName.csproj" />
+    <ProjectReference Include="..\Modules\Autocomp.Nmea.PrismApp.Modules.ModuleName\Autocomp.Nmea.PrismApp.Modules.ParserModule.csproj" />
   </ItemGroup>
 </Project>
