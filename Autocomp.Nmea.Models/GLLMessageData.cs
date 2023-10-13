@@ -1,4 +1,5 @@
-﻿using static Autocomp.Nmea.Models.NmeaEnums.GLLEnums;
+﻿using Autocomp.Nmea.Models.NmeaEnums;
+using static Autocomp.Nmea.Models.NmeaEnums.GLLEnums;
 
 namespace Autocomp.Nmea.Models
 {
@@ -33,12 +34,10 @@ namespace Autocomp.Nmea.Models
         public override string ToString()
         {
             return $"Latitude: {Latitude}\n" +
-                   $"LatitudeDirection: {LatitudeDirection}\n" +
                    $"Longitude: {Longitude}\n" +
-                   $"LongitudeDirection: {LongitudeDirection}\n" +
                    $"UTCTime: {UTCTime}\n" +
-                   $"Status: {Status}\n" +
-                   $"ModeIndicator: {ModeIndicator}";
+                   $"Status: {Status.ToDescription()}\n" +
+                   $"ModeIndicator: {ModeIndicator.ToDescription()}";
         }
     }
 }

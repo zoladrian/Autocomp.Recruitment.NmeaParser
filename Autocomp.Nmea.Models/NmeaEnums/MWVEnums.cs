@@ -16,7 +16,7 @@ namespace Autocomp.Nmea.Models.NmeaEnums
         public enum WindSpeedUnits
         {
             K, // km/h
-            M, // m/s
+            M, // m/h
             N, // Węzły
             S  // mph
         }

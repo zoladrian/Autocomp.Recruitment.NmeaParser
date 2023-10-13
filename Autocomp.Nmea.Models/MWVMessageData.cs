@@ -1,4 +1,5 @@
-﻿using static Autocomp.Nmea.Models.NmeaEnums.MWVEnums;
+﻿using Autocomp.Nmea.Models.NmeaEnums;
+using static Autocomp.Nmea.Models.NmeaEnums.MWVEnums;
 
 namespace Autocomp.Nmea.Models
 {
@@ -27,10 +28,11 @@ namespace Autocomp.Nmea.Models
         public override string ToString()
         {
             return $"WindAngle: {WindAngle}\n" +
-                   $"Reference: {Reference}\n" +
+                   $"Reference: {Reference.ToDescription()}\n" +
                    $"WindSpeed: {WindSpeed}\n" +
-                   $"WindSpeedUnits: {WindSpeedUnits}\n" +
-                   $"Status: {Status}";
+                   $"WindSpeedUnits: {WindSpeedUnits.ToDescription()}\n" +
+                   $"Status: {Status.ToDescription()}";
         }
+
     }
 }

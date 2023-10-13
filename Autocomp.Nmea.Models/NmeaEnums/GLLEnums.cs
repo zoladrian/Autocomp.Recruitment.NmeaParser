@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Autocomp.Nmea.Models.NmeaEnums
+﻿namespace Autocomp.Nmea.Models.NmeaEnums
 {
     // Klasa kontenerowa dla enumów używanych w komunikatach NMEA typu GLL.
     public static class GLLEnums
@@ -28,7 +22,7 @@ namespace Autocomp.Nmea.Models.NmeaEnums
         }
 
         /// <summary>
-        /// Status danych. A oznacza dane ważne, V oznacza dane nie ważne.
+        /// Definiuje status wiadomości.
         /// </summary>
         public enum Status
         {
