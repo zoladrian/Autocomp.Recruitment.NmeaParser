@@ -24,5 +24,13 @@ namespace Autocomp.Nmea.Models
             Reference = reference;
             Status = status;
         }
+        public override string ToString()
+        {
+            return $"WindAngle: {WindAngle}\n" +
+                   $"Reference: {Reference}\n" +
+                   $"WindSpeed: {WindSpeed}\n" +
+                   $"WindSpeedUnits: {WindSpeedUnits}\n" +
+                   $"Status: {Status}";
+        }
     }
 }
