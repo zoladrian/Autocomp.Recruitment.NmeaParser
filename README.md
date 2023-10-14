@@ -1,12 +1,24 @@
 # Autocomp.Recruitment.NmeaParser
 
-<h2>Zadanie rekrutacyjne na stanowisko C# Developer - Parser Nmea</h2>
+<h1>Nmea Parser</h1>
 
-Opis zadania znajduje się w [_doc/Zadanie_rekrutacyjne_NmeaParser.pdf](_doc/Zadanie_rekrutacyjne_NmeaParser.pdf).
+<h2>Opis projektu</h2>
+<p>Jest to projekt Parser NMEA, który służy do wyświetlania informacji zawartych w wiadomościach NMEA.</p>
 
-Prosimy skolonować/ściągnąć to repozytorium lub zrobić forka na swoje konto GitHuba. Po zakończeniu pracy, powiadom nas wysyłając wiadomość na adres mberdyszak@autocomp.com.pl.
+<h2>Język i konwencje</h2>
+<p>Komentarze w kodzie są w języku polskim, zgodnie z konwencją stosowaną w projekcie, który miałem za zadanie wykorzystać. Interfejs użytkownika (GUI) jest natomiast w języku angielskim.</p>
 
-<p>Jeżeli sklonowałeś/ściągnąłeś repozytorium to spakuj cały projekt (koniecznie z katalogiem .git, abyśmy mogli zobaczyć historię commitów), wrzuć go do sieci i wyślij nam link do paczki. Nie wysyłaj nam paczki w załączniku.<br/>
-Jeżeli zrobiłeś forka to wyślij nam adres swojego repozytorium.<p>
+<h2>Zewnętrzne biblioteki</h2>
+<ul>
+    <li><strong>Prism</strong>: Struktura kodu, regionManager, wstrzykiwanie zależności, BindableBase.</li>
+    <li><strong>FluentValidation</strong>: Walidacja zakresu danych.</li>
+    <li><strong>xUnit</strong>: Testy jednostkowe.</li>
+    <li><strong>Moq</strong>: Mockowanie testów jednostkowych.</li>
+    <li><strong>MaterialDesign</strong>: Wygląd GUI.</li>
+</ul>
 
-<h3>Powodzenia!</h3>
+<h2>Parsowanie</h2>
+<p>Oba parsery korzystają z klas implementujących interfejs <code>IFieldParser</code>, gdzie parsowane są pojedyncze pola. Zdecydowałem się na takie rozwiązanie, aby nie łamać pierwszej zasady SOLID. Dodatkowo, do obsługi błędów i sprawdzania zakresu danych, użyłem biblioteki FluentValidation (np. czy stopnie są z zakresu 0-359). Przeparsowane wiadomości są przekazywane do widoku w <code>ParserViewModel</code> za pośrednictwem nadpisanej metody <code>ToString()</code> w modelach.</p>
+
+<h2>Komunikacja między ViewModel a parserami</h2>
+<p>Miałem problem z zastosowaniem wzorca strategii, ponieważ klasy parserów implementują ten sam interfejs generyczny, a klasy modeli nie mają wspólnych cech, które pozwoliłyby na utworzenie wspólnej abstrakcji. Wybrałem więc strategię opartą na refleksji. Myślałem również o innych sposobach rozszerzenia parsera, aby umożliwić interpretację wiadomości z różnymi nagłówkami. Wybrana "hybryda" wydaje mi się być najrozsądniejszą opcją, ale chętnie wysłucham innych pomysłów.</p>
