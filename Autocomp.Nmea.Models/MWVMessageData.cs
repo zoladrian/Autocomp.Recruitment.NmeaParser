@@ -1,5 +1,6 @@
 ﻿using Autocomp.Nmea.Models.NmeaEnums;
 using static Autocomp.Nmea.Models.NmeaEnums.MWVEnums;
+using System;
 
 namespace Autocomp.Nmea.Models
 {
@@ -25,13 +26,22 @@ namespace Autocomp.Nmea.Models
             Reference = reference;
             Status = status;
         }
+
         public override string ToString()
         {
-            return $"WindAngle: {WindAngle}\n" +
+            string formattedWindAngle = FormatAngle(WindAngle);
+            return $"Format: MWV\n" +
+                   $"WindAngle: {formattedWindAngle}\n" +
                    $"Reference: {Reference.ToDescription()}\n" +
-                   $"WindSpeed: {WindSpeed} { WindSpeedUnits.ToDescription()}\n" +
+                   $"WindSpeed: {WindSpeed} {WindSpeedUnits.ToDescription()}\n" +
                    $"Status: {Status.ToDescription()}";
         }
 
+        private string FormatAngle(double angle)
+        {
+            int degrees = (int)angle;
+            double minutes = (angle - degrees) * 60;
+            return $"{degrees}°{minutes:0.00}'";
+        }
     }
 }

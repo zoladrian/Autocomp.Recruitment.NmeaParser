@@ -37,7 +37,8 @@ namespace Autocomp.Nmea.Models
             string formattedLongitude = FormatCoordinate(Longitude, LongitudeDirection);
             string formattedTime = UTCTime.ToString("HH:mm:ss.fff") + " UTC";
 
-            return $"Latitude: {formattedLatitude}\n" +
+            return $"Format: GLL\n" +
+                   $"Latitude: {formattedLatitude}\n" +
                    $"Longitude: {formattedLongitude}\n" +
                    $"UTC Time: {formattedTime}\n" +
                    $"Status: {Status.ToDescription()}\n" +

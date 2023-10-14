@@ -59,6 +59,7 @@ namespace Autocomp.Nmea.PrismApp.Modules.ModuleName.ViewModels
 
         private void ParseNmea()
         {
+            ParsedData = string.Empty;
             ErrorMessage = string.Empty;
             if (string.IsNullOrEmpty(NmeaInput)) return;
 
