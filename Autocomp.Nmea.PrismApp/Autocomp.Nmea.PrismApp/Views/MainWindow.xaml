@@ -4,8 +4,24 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         xmlns:core="clr-namespace:Autocomp.Nmea.PrismApp.Core;assembly=Autocomp.Nmea.PrismApp.Core"
-        Title="{Binding Title}" Height="350" Width="525" >
+        Title="{Binding Title}" Height="350" Width="525"
+        Background="{StaticResource CustomLightGray}">
+
     <Grid>
-        <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Nmea Parser" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="#673AB7"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" />
     </Grid>
 </Window>
