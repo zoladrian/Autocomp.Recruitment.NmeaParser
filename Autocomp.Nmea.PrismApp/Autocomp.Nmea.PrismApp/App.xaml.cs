@@ -4,6 +4,7 @@ using Autocomp.Nmea.Parsers.FieldParsers;
 using Autocomp.Nmea.Parsers.Interfaces;
 using Autocomp.Nmea.Parsers.Validators;
 using Autocomp.Nmea.PrismApp.Modules.ModuleName;
+using Autocomp.Nmea.PrismApp.Modules.ModuleName.ViewModels;
 using Autocomp.Nmea.PrismApp.Views;
 using FluentValidation;
 using Prism.Ioc;
@@ -35,6 +36,8 @@ namespace Autocomp.Nmea.PrismApp
             containerRegistry.Register<INmeaParser<MWVMessageData>, MWVParser>();
             containerRegistry.Register<IValidator<MWVMessageData>, MWVMessageDataValidator>();
 
+            containerRegistry.Register<INmeaParsingStrategy, ReflectionBasedNmeaParsingStrategy>();
+
             // Rejestracja parserów dla różnych typów pól
             containerRegistry.Register<IFieldParser<DateTime>, DateTimeFieldParser>();
             containerRegistry.Register<IFieldParser<LatitudeDirection>, EnumFieldParser<LatitudeDirection>>();
@@ -46,6 +49,8 @@ namespace Autocomp.Nmea.PrismApp
             containerRegistry.Register<IFieldParser<WindSpeedUnits>, EnumFieldParser<WindSpeedUnits>>();
             containerRegistry.Register<IFieldParser<Reference>, EnumFieldParser<Reference>>();
             containerRegistry.Register<IFieldParser<Models.NmeaEnums.GLLEnums.Status>, EnumFieldParser<Models.NmeaEnums.GLLEnums.Status>>();
+
+            containerRegistry.Register<ParserViewModel>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

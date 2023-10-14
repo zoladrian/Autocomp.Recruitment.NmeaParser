@@ -1,16 +1,19 @@
-﻿using Autocomp.Nmea.Common;
-using Autocomp.Nmea.Models;
-using Autocomp.Nmea.Parsers;
-using Autocomp.Nmea.Parsers.Interfaces;
+﻿using System.Collections.Generic;
 using Prism.Commands;
 using Prism.Mvvm;
-using System;
 using System.Windows.Input;
+using Autocomp.Nmea.Common;
+using Autocomp.Nmea.Parsers;
+using Autocomp.Nmea.Models;
+using Autocomp.Nmea.Parsers.Interfaces;
 
 namespace Autocomp.Nmea.PrismApp.Modules.ModuleName.ViewModels
 {
     public class ParserViewModel : BindableBase
     {
+        private readonly Dictionary<string, object> _parsers;
+        private readonly ReflectionBasedNmeaParsingStrategy _parsingStrategy;
+
         private string _message;
         private string _parsedData;
         private string _nmeaInput;
@@ -35,13 +38,14 @@ namespace Autocomp.Nmea.PrismApp.Modules.ModuleName.ViewModels
 
         public ICommand ParseCommand { get; private set; }
 
-        private readonly INmeaParser<GLLMessageData> _gllParser;
-        private readonly INmeaParser<MWVMessageData> _mwvParser;
-
-        public ParserViewModel(INmeaParser<GLLMessageData> gllParser, INmeaParser<MWVMessageData> mwvParser)
+        public ParserViewModel(INmeaParser<GLLMessageData> gllParser, INmeaParser<MWVMessageData> mwvParser, INmeaParsingStrategy parsingStrategy)
         {
-            _gllParser = gllParser;
-            _mwvParser = mwvParser;
+            _parsers = new Dictionary<string, object>
+            {
+                { "GLL", gllParser },
+                { "MWV", mwvParser }
+            };
+            _parsingStrategy = new ReflectionBasedNmeaParsingStrategy();
             ParseCommand = new DelegateCommand(ParseNmea);
         }
 
@@ -50,28 +54,8 @@ namespace Autocomp.Nmea.PrismApp.Modules.ModuleName.ViewModels
             if (string.IsNullOrEmpty(NmeaInput)) return;
 
             NmeaMessage nmeaMessage = new NmeaMessage(NmeaInput);
-
-            if (_gllParser.CanParse(nmeaMessage.Header))
-            {
-                var result = _gllParser.Parse(nmeaMessage);
-                if (result.Success)
-                    ParsedData = result.Data.ToString();
-                else if (result.ErrorMessage is not null)
-                    ParsedData = result.ErrorMessage;
-            }
-            else if (_mwvParser.CanParse(nmeaMessage.Header))
-            {
-
-                var result = _mwvParser.Parse(nmeaMessage);
-                if (result.Success)
-                    ParsedData = result.Data.ToString();
-                else if (result.ErrorMessage is not null)
-                    ParsedData = result.ErrorMessage;
-            }
-            else
-            {
-                ParsedData = "Unknown header";
-            }
+            _parsingStrategy.Parse(nmeaMessage, _parsers, ref _parsedData);
+            RaisePropertyChanged(nameof(ParsedData));
         }
     }
 }
