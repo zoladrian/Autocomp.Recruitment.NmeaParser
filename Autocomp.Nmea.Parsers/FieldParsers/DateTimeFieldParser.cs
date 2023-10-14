@@ -7,7 +7,26 @@ namespace Autocomp.Nmea.Parsers.FieldParsers
     {
         public bool TryParse(string field, out DateTime value)
         {
-            return DateTime.TryParseExact(field.Trim(), "HHmmss.ff", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal, out value);
+            string trimmedField = field.Trim();
+            string[] formats = new[]
+            {
+                "HHmmss",
+                "HHmmss.f",
+                "HHmmss.ff",
+                "HHmmss.fff",
+            };
+
+            foreach (var format in formats)
+            {
+                if (DateTime.TryParseExact(trimmedField, format, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal, out value))
+                {
+                    return true;
+                }
+            }
+
+            value = default;
+            return false;
         }
+
     }
 }

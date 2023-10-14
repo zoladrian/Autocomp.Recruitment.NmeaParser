@@ -33,11 +33,22 @@ namespace Autocomp.Nmea.Models
         }
         public override string ToString()
         {
-            return $"Latitude:{LatitudeDirection} {Latitude}\n" +
-                   $"Longitude: {LongitudeDirection} {Longitude}\n" +
-                   $"UTCTime: {UTCTime.TimeOfDay}\n" +
+            string formattedLatitude = FormatCoordinate(Latitude, LatitudeDirection);
+            string formattedLongitude = FormatCoordinate(Longitude, LongitudeDirection);
+            string formattedTime = UTCTime.ToString("HH:mm:ss.fff") + " UTC";
+
+            return $"Latitude: {formattedLatitude}\n" +
+                   $"Longitude: {formattedLongitude}\n" +
+                   $"UTC Time: {formattedTime}\n" +
                    $"Status: {Status.ToDescription()}\n" +
-                   $"ModeIndicator: {ModeIndicator.ToDescription()}";
+                   $"Mode Indicator: {ModeIndicator.ToDescription()}";
+        }
+
+        private string FormatCoordinate(double coordinate, Enum direction)
+        {
+            int degrees = (int)coordinate;
+            double minutes = (coordinate - degrees) * 60;
+            return $"{degrees}°{minutes:0.00}' {direction}";
         }
     }
 }
