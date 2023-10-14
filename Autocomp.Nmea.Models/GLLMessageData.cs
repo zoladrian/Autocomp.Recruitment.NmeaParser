@@ -13,7 +13,6 @@ namespace Autocomp.Nmea.Models
         public Status Status { get; set; }
         public ModeIndicator ModeIndicator { get; set; }
 
-
         public GLLMessageData(
             double latitude,
             LatitudeDirection latitudeDirection,
@@ -31,16 +30,17 @@ namespace Autocomp.Nmea.Models
             Status = status;
             ModeIndicator = modeIndicator;
         }
+
         public override string ToString()
         {
             string formattedLatitude = FormatCoordinate(Latitude, LatitudeDirection);
             string formattedLongitude = FormatCoordinate(Longitude, LongitudeDirection);
             string formattedTime = UTCTime.ToString("HH:mm:ss.fff") + " UTC";
 
-            return $"Format: GLL\n" +
+            return $"Format: Geographic Position - Latitude/Longitude\n" +
                    $"Latitude: {formattedLatitude}\n" +
                    $"Longitude: {formattedLongitude}\n" +
-                   $"UTC Time: {formattedTime}\n" +
+                   $"Time: {formattedTime}\n" +
                    $"Status: {Status.ToDescription()}\n" +
                    $"Mode Indicator: {ModeIndicator.ToDescription()}";
         }

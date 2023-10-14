@@ -50,6 +50,7 @@ namespace Autocomp.Nmea.PrismApp
             containerRegistry.Register<IFieldParser<Reference>, EnumFieldParser<Reference>>();
             containerRegistry.Register<IFieldParser<Models.NmeaEnums.GLLEnums.Status>, EnumFieldParser<Models.NmeaEnums.GLLEnums.Status>>();
 
+            //rejestracja ViewModeli
             containerRegistry.Register<ParserViewModel>();
         }
 

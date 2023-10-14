@@ -1,5 +1,4 @@
-﻿
-namespace Autocomp.Nmea.Parsers.Interfaces
+﻿namespace Autocomp.Nmea.Parsers.Interfaces
 {
     public interface IFieldParser<T>
     {

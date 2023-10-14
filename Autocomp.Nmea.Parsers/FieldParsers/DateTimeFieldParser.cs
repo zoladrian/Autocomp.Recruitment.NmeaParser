@@ -27,6 +27,5 @@ namespace Autocomp.Nmea.Parsers.FieldParsers
             value = default;
             return false;
         }
-
     }
 }

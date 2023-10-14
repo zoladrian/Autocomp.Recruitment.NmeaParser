@@ -1,7 +1,5 @@
 ﻿using Autocomp.Nmea.Common;
 using Autocomp.Nmea.Parsers.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Reflection;
 
 namespace Autocomp.Nmea.Parsers

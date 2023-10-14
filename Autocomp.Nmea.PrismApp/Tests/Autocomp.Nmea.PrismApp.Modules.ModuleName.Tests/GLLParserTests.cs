@@ -15,6 +15,7 @@ namespace Autocomp.Nmea.Parsers.Tests
     {
         private readonly Mock<IValidator<GLLMessageData>> mockValidator;
         private const double Tolerance = 0.000001;
+
         public GLLParserTests()
         {
             mockValidator = new Mock<IValidator<GLLMessageData>>();
@@ -139,6 +140,7 @@ namespace Autocomp.Nmea.Parsers.Tests
             Assert.False(result.Success);
             Assert.Equal("Invalid mode indicator", result.ErrorMessage);
         }
+
         /// <summary>
         /// Sprawdza czy dana wartość mieści się w tolerancji błędu
         /// </summary>
@@ -146,6 +148,7 @@ namespace Autocomp.Nmea.Parsers.Tests
         {
             Assert.True(Math.Abs(expected - actual) < Tolerance, $"Expected {expected} but got {actual}.");
         }
+
         private GLLParser CreateGLLParser()
         {
             return new GLLParser(

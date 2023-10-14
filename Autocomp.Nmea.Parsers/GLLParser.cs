@@ -83,7 +83,7 @@ namespace Autocomp.Nmea.Parsers
                 return new ParseResult<GLLMessageData> { Success = false, ErrorMessage = "Invalid mode indicator" };
             }
 
-            // konwertowanie latitude i longitude do dziesiętnych wartości stopni i minut kątowych po to aby 
+            // konwertowanie latitude i longitude do dziesiętnych wartości stopni i minut kątowych po to aby
             // sprawdzić czy zakres tych wartości jest odpowwiedni. użycie decimal gwarantuje lepszą dokładność
             decimal decimalLatitude = NmeaUtilities.ConvertToDecimalDegrees(latitude);
             decimal decimalLongitude = NmeaUtilities.ConvertToDecimalDegrees(longitude);

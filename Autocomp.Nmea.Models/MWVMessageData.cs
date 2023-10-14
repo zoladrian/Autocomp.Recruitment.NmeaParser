@@ -1,6 +1,5 @@
 ﻿using Autocomp.Nmea.Models.NmeaEnums;
 using static Autocomp.Nmea.Models.NmeaEnums.MWVEnums;
-using System;
 
 namespace Autocomp.Nmea.Models
 {
@@ -30,7 +29,7 @@ namespace Autocomp.Nmea.Models
         public override string ToString()
         {
             string formattedWindAngle = FormatAngle(WindAngle);
-            return $"Format: MWV\n" +
+            return $"Format: Wind Speed and Angle\n" +
                    $"WindAngle: {formattedWindAngle}\n" +
                    $"Reference: {Reference.ToDescription()}\n" +
                    $"WindSpeed: {WindSpeed} {WindSpeedUnits.ToDescription()}\n" +
