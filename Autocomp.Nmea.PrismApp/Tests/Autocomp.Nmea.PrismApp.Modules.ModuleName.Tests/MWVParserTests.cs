@@ -20,16 +20,6 @@ namespace Autocomp.Nmea.Parsers.Tests
         }
 
         [Fact]
-        public void CanParse_ValidMWVHeader_ReturnsTrue()
-        {
-            var parser = CreateMWVParser();
-
-            bool result = parser.CanParse("$SLMWV");
-
-            Assert.True(result);
-        }
-
-        [Fact]
         public void Parse_ValidMWVMessage_ReturnsCorrectData()
         {
             mockValidator.Setup(x => x.Validate(It.IsAny<MWVMessageData>())).Returns(new ValidationResult());

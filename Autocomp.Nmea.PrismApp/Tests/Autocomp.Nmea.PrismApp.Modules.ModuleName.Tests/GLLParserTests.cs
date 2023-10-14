@@ -21,16 +21,6 @@ namespace Autocomp.Nmea.Parsers.Tests
         }
 
         [Fact]
-        public void CanParse_ValidGLLHeader_ReturnsTrue()
-        {
-            var parser = CreateGLLParser();
-
-            bool result = parser.CanParse("$GPGLL");
-
-            Assert.True(result);
-        }
-
-        [Fact]
         public void Parse_ValidGLLMessage_ReturnsCorrectData()
         {
             mockValidator.Setup(x => x.Validate(It.IsAny<GLLMessageData>())).Returns(new ValidationResult());
@@ -74,16 +64,6 @@ namespace Autocomp.Nmea.Parsers.Tests
 
             Assert.False(result.Success);
             Assert.Equal("Some error", result.ErrorMessage);
-        }
-
-        [Fact]
-        public void CanParse_InvalidGLLHeader_ReturnsFalse()
-        {
-            var parser = CreateGLLParser();
-
-            bool result = parser.CanParse("INVALID");
-
-            Assert.False(result);
         }
 
         [Fact]

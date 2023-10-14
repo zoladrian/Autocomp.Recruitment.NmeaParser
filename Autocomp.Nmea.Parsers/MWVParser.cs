@@ -30,13 +30,6 @@ namespace Autocomp.Nmea.Parsers
             this.referenceParser = referenceParser;
             this.statusParser = statusParser;
         }
-        /// <summary>
-        /// Sprawdza czy wiadomość może być przetworzona przez ten parser.
-        /// </summary>
-        public bool CanParse(string header)
-        {
-            return Regex.IsMatch(header, @"^\$..MWV");
-        }
 
         /// <summary>
         /// Przetwarza wiadomość NMEA na obiekt danych MWV.

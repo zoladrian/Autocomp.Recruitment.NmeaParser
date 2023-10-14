@@ -15,6 +15,7 @@ namespace Autocomp.Nmea.Parsers
         /// </summary>
         public void Parse(NmeaMessage message, Dictionary<string, object> parsers, ref string parsedData)
         {
+            try { 
             string headerKey = message.Header.Substring(message.Header.Length - 3);
             if (parsers.TryGetValue(headerKey, out object parserObj))
             {
@@ -38,7 +39,12 @@ namespace Autocomp.Nmea.Parsers
             }
             else
             {
-                parsedData = "Unknown header";
+                parsedData = "Unknown message";
+            }
+        }
+            catch 
+            { 
+                parsedData = "Unknown message";
             }
         }
     }
