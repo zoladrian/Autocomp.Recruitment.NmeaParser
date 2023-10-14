@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Autocomp.Nmea.Common;
+using Autocomp.Nmea.Models;
+using Autocomp.Nmea.Parsers;
+using Autocomp.Nmea.Parsers.Interfaces;
 using Prism.Commands;
 using Prism.Mvvm;
+using System.Collections.Generic;
 using System.Windows.Input;
-using Autocomp.Nmea.Common;
-using Autocomp.Nmea.Parsers;
-using Autocomp.Nmea.Models;
-using Autocomp.Nmea.Parsers.Interfaces;
 
 namespace Autocomp.Nmea.PrismApp.Modules.ModuleName.ViewModels
 {
@@ -36,6 +36,14 @@ namespace Autocomp.Nmea.PrismApp.Modules.ModuleName.ViewModels
             set { SetProperty(ref _nmeaInput, value); }
         }
 
+        private string _errorMessage;
+
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set { SetProperty(ref _errorMessage, value); }
+        }
+
         public ICommand ParseCommand { get; private set; }
 
         public ParserViewModel(INmeaParser<GLLMessageData> gllParser, INmeaParser<MWVMessageData> mwvParser, INmeaParsingStrategy parsingStrategy)
@@ -51,11 +59,19 @@ namespace Autocomp.Nmea.PrismApp.Modules.ModuleName.ViewModels
 
         private void ParseNmea()
         {
+            ErrorMessage = string.Empty;
             if (string.IsNullOrEmpty(NmeaInput)) return;
 
             NmeaMessage nmeaMessage = new NmeaMessage(NmeaInput);
-            _parsingStrategy.Parse(nmeaMessage, _parsers, ref _parsedData);
+            _parsingStrategy.Parse(nmeaMessage, _parsers, ref _parsedData, out string errorMessage);
+
+            if (!string.IsNullOrEmpty(errorMessage))
+            {
+                ErrorMessage = errorMessage;
+            }
+
             RaisePropertyChanged(nameof(ParsedData));
+            RaisePropertyChanged(nameof(ErrorMessage));
         }
     }
 }

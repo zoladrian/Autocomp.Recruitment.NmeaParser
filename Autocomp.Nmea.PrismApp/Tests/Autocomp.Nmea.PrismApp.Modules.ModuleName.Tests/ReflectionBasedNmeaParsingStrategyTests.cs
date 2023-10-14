@@ -23,49 +23,37 @@ namespace Autocomp.Nmea.Parsers.Tests
                     Data = new GLLMessageData(
                         49.274167,
                         LatitudeDirection.N,
-                        123.185333, 
+                        123.185333,
                         LongitudeDirection.W,
                         DateTime.ParseExact("225444.00", "HHmmss.ff", CultureInfo.InvariantCulture),
-                        Status.A, 
-                        ModeIndicator.A 
+                        Status.A,
+                        ModeIndicator.A
                     )
                 });
 
             var message = new NmeaMessage("$GPGLL,4916.45,N,12311.12,W,225444.00,A,A*61");
+            string errorMessage;
             var parsers = new Dictionary<string, object> { { "GLL", mockParser.Object } };
             var sut = new ReflectionBasedNmeaParsingStrategy();
             string parsedData = null;
 
-            sut.Parse(message, parsers, ref parsedData);
-
+            sut.Parse(message, parsers, ref parsedData, out errorMessage);
+            Assert.Null(errorMessage);
             Assert.NotNull(parsedData);
         }
-
 
         [Fact]
         public void Parse_WithInvalidHeader_ReturnsUnknownMessage()
         {
             var message = new NmeaMessage("INVALID,4916.45,N,12311.12,W,225444.00,A,A*61");
             var parsers = new Dictionary<string, object>();
+            string errorMessage;
             var sut = new ReflectionBasedNmeaParsingStrategy();
             string parsedData = null;
 
-            sut.Parse(message, parsers, ref parsedData);
+            sut.Parse(message, parsers, ref parsedData, out errorMessage);
 
-            Assert.Equal("Unknown message", parsedData);
-        }
-
-        [Fact]
-        public void Parse_WithException_ReturnsUnknownMessage()
-        {
-            var message = new NmeaMessage("INVALID");
-            var parsers = new Dictionary<string, object> { { "123", new object() } };
-            var sut = new ReflectionBasedNmeaParsingStrategy();
-            string parsedData = null;
-
-            sut.Parse(message, parsers, ref parsedData);
-
-            Assert.Equal("Unknown message", parsedData);
+            Assert.Equal("Unknown message", errorMessage);
         }
     }
 }

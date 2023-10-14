@@ -1,10 +1,7 @@
 ﻿using Autocomp.Nmea.Common;
 using Autocomp.Nmea.Models;
 using Autocomp.Nmea.Parsers.Interfaces;
-using Autocomp.Nmea.Parsers.Validators;
 using FluentValidation;
-using System.Globalization;
-using System.Text.RegularExpressions;
 using static Autocomp.Nmea.Models.NmeaEnums.MWVEnums;
 
 namespace Autocomp.Nmea.Parsers
@@ -37,6 +34,11 @@ namespace Autocomp.Nmea.Parsers
         public ParseResult<MWVMessageData> Parse(NmeaMessage message)
         {
             var fields = message.Fields;
+
+            if (fields.Count() < 5)
+            {
+                return new ParseResult<MWVMessageData> { Success = false, ErrorMessage = "Some value is missing" };
+            }
 
             if (!doubleFieldParser.TryParse(fields[0], out var windAngle))
             {

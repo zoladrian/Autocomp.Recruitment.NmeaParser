@@ -1,10 +1,8 @@
 ﻿using Autocomp.Nmea.Common;
 using Autocomp.Nmea.Models;
-using Autocomp.Nmea.Parsers.FieldParsers;
 using Autocomp.Nmea.Parsers.Interfaces;
 using Autocomp.Nmea.Parsers.Utilities;
 using FluentValidation;
-using System.Text.RegularExpressions;
 using static Autocomp.Nmea.Models.NmeaEnums.GLLEnums;
 
 namespace Autocomp.Nmea.Parsers
@@ -37,12 +35,18 @@ namespace Autocomp.Nmea.Parsers
             this.statusParser = statusParser;
             this.modeIndicatorParser = modeIndicatorParser;
         }
+
         /// <summary>
         /// Przetwarza wiadomość NMEA na obiekt danych GLL.
         /// </summary>
         public ParseResult<GLLMessageData> Parse(NmeaMessage message)
         {
             var fields = message.Fields;
+
+            if (fields.Count() < 7)
+            {
+                return new ParseResult<GLLMessageData> { Success = false, ErrorMessage = "Some value is missing" };
+            }
 
             if (!decimalFieldParser.TryParse(fields[0], out var latitude))
             {
@@ -82,8 +86,6 @@ namespace Autocomp.Nmea.Parsers
             // konwertowanie latitude i longitude do dziesiętnych wartości stopni i minut kątowych
             decimal decimalLatitude = NmeaUtilities.ConvertToDecimalDegrees(latitude);
             decimal decimalLongitude = NmeaUtilities.ConvertToDecimalDegrees(longitude);
-
-
 
             var gllMessageData = new GLLMessageData(
                 (double)decimalLatitude,

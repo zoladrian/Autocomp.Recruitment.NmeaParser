@@ -1,26 +1,30 @@
 ﻿<UserControl x:Class="Autocomp.Nmea.PrismApp.Modules.ModuleName.Views.ParserView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              prism:ViewModelLocator.AutoWireViewModel="True"
              Background="White">
 
     <Grid Background="White">
         <Border Background="{StaticResource CustomBorderGray}"
             BorderBrush="{StaticResource CustomBorderGray}"
-                BorderThickness="0.1" 
+                BorderThickness="0.1"
                 Margin="5">
             <StackPanel Margin="10">
                 <TextBox Text="{Binding NmeaInput}" Width="300" Margin="0 0 0 10"
                     Foreground="{DynamicResource MaterialDesignBody}" />
 
                 <Button Content="Parse" Command="{Binding ParseCommand}" Width="100" Margin="0 0 0 10"
-                        Background="{DynamicResource MaterialDesignPrimary}" 
+                        Background="{DynamicResource MaterialDesignPrimary}"
                         Foreground="{DynamicResource MaterialDesignOnPrimary}" />
 
                 <TextBlock Text="{Binding ParsedData}" FontSize="16" TextWrapping="Wrap"
                            VerticalAlignment="Center" HorizontalAlignment="Center"
                            Foreground="{DynamicResource MaterialDesignBody}" />
+
+                <TextBlock Text="{Binding ErrorMessage}" FontSize="16" TextWrapping="Wrap"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Foreground="Red" />
             </StackPanel>
         </Border>
     </Grid>

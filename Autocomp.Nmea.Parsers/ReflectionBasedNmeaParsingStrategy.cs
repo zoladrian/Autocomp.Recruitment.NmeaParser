@@ -1,5 +1,7 @@
 ﻿using Autocomp.Nmea.Common;
 using Autocomp.Nmea.Parsers.Interfaces;
+using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace Autocomp.Nmea.Parsers
@@ -8,43 +10,63 @@ namespace Autocomp.Nmea.Parsers
     {
         /// <summary>
         /// Metoda dynamicznie wywołuje odpowiedni parser NMEA na podstawie nagłówka wiadomości.
+        /// Parsuje wiadomość i przechowuje wynik w przekazanym przez referencję stringu.
+        /// W przypadku niepowodzenia zwraca komunikat o błędzie.
         /// </summary>
-        /// <param name="message">Wiadomość NMEA do przetworzenia.</param>
-        /// <param name="parsers">Słownik zawierający dostępne parsery.</param>
+        /// <param name="message">Wiadomość NMEA do przetworzenia. Nie może być null.</param>
+        /// <param name="parsers">Słownik zawierający dostępne parsery. Nie może być null.</param>
         /// <param name="parsedData">Referencja do stringa przechowującego wynik analizy.</param>
-        /// </summary>
-        public void Parse(NmeaMessage message, Dictionary<string, object> parsers, ref string parsedData)
+        public void Parse(NmeaMessage message, Dictionary<string, object> parsers, ref string parsedData, out string errorMessage)
         {
-            try { 
-            string headerKey = message.Header.Substring(message.Header.Length - 3);
-            if (parsers.TryGetValue(headerKey, out object parserObj))
+            errorMessage = null;
+
+            if (message == null)
             {
-                Type parserType = parserObj.GetType();
-                MethodInfo parseMethod = parserType.GetMethod("Parse");
-                if (parseMethod != null)
+                errorMessage = "Nmea Message is empty.";
+                return;
+            }
+
+            if (parsers == null)
+            {
+                errorMessage = "Parsers list is empty.";
+                return;
+            }
+
+            try
+            {
+                string headerKey = message.Header.Substring(message.Header.Length - 3);
+                if (parsers.TryGetValue(headerKey, out object parserObj))
                 {
-                    var result = parseMethod.Invoke(parserObj, new object[] { message });
-                    PropertyInfo successProp = result.GetType().GetProperty("Success");
-                    if ((bool)successProp.GetValue(result))
+                    Type parserType = parserObj.GetType();
+                    MethodInfo parseMethod = parserType.GetMethod("Parse");
+                    if (parseMethod != null)
                     {
-                        PropertyInfo dataProp = result.GetType().GetProperty("Data");
-                        parsedData = dataProp.GetValue(result).ToString();
+                        var result = parseMethod.Invoke(parserObj, new object[] { message });
+                        PropertyInfo successProp = result.GetType().GetProperty("Success");
+                        if ((bool)successProp.GetValue(result))
+                        {
+                            PropertyInfo dataProp = result.GetType().GetProperty("Data");
+                            parsedData = dataProp.GetValue(result).ToString();
+                        }
+                        else
+                        {
+                            PropertyInfo errorProp = result.GetType().GetProperty("ErrorMessage");
+                            errorMessage = (string)errorProp.GetValue(result);
+                        }
                     }
                     else
                     {
-                        PropertyInfo errorProp = result.GetType().GetProperty("ErrorMessage");
-                        parsedData = (string)errorProp.GetValue(result);
+                        errorMessage = "Unknown message";
                     }
                 }
+                else
+                {
+                    errorMessage = "Unknown message";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                parsedData = "Unknown message";
-            }
-        }
-            catch 
-            { 
-                parsedData = "Unknown message";
+                errorMessage = ex.Message;
             }
         }
     }
