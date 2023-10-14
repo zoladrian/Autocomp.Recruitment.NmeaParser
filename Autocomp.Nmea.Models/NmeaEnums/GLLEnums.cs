@@ -1,46 +1,60 @@
 ﻿namespace Autocomp.Nmea.Models.NmeaEnums
 {
-    // Klasa kontenerowa dla enumów używanych w komunikatach NMEA typu GLL.
+    /// <summary>
+    /// Klasa kontenerowa dla typów wyliczeniowych (enumów) używanych w komunikatach NMEA typu GLL.
+    /// </summary>
     public static class GLLEnums
     {
         /// <summary>
-        /// Określa kierunek szerokości geograficznej.
+        /// Enum LatitudeDirection określa kierunek szerokości geograficznej:
+        /// - N: Północ
+        /// - S: Południe
         /// </summary>
         public enum LatitudeDirection
         {
-            N, // Północ
-            S  // Południe
+            N,
+            S
         }
 
         /// <summary>
-        /// Określa kierunek długości geograficznej.
+        /// Enum LongitudeDirection określa kierunek długości geograficznej:
+        /// - E: Wschód
+        /// - W: Zachód
         /// </summary>
         public enum LongitudeDirection
         {
-            E, // Wschód
-            W  // Zachód
+            E,
+            W
         }
 
         /// <summary>
-        /// Definiuje status wiadomości.
+        /// Enum Status definiuje status ważności danych:
+        /// - A: Dane są ważne
+        /// - V: Dane są nieważne
         /// </summary>
         public enum Status
         {
-            A, // Dane są ważne
-            V  // Dane są nieważne
+            A,
+            V
         }
 
         /// <summary>
-        /// Definiuje tryb wskaźnika systemu nawigacji.
+        /// Enum ModeIndicator określa tryb pracy wskaźnika systemu nawigacji:
+        /// - A: Tryb autonomiczny
+        /// - D: Tryb różnicowy
+        /// - E: Tryb szacowany (dead reckoning)
+        /// - M: Tryb ręcznego wprowadzania
+        /// - S: Tryb symulatora
+        /// - N: Dane są nieważne
         /// </summary>
         public enum ModeIndicator
         {
-            A, // Tryb autonomiczny
-            D, // Tryb różnicowy
-            E, // Tryb szacowany (dead reckoning)
-            M, // Tryb ręcznego wprowadzania
-            S, // Tryb symulatora
-            N  // Dane są nieważne
+            A,
+            D,
+            E,
+            M,
+            S,
+            N
         }
     }
 }

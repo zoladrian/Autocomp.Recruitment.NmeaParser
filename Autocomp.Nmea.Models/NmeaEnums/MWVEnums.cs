@@ -1,43 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Autocomp.Nmea.Models.NmeaEnums
+﻿namespace Autocomp.Nmea.Models.NmeaEnums
 {
-    // Klasa kontenerowa dla enumów używanych w komunikatach NMEA typu MWV.
+    /// <summary>
+    /// Klasa kontenerowa dla typów wyliczeniowych (enumów) używanych w komunikatach NMEA typu MWV.
+    /// </summary>
     public static class MWVEnums
     {
-
         /// <summary>
-        /// Definiuje jednostki prędkości wiatru.
+        /// Enum WindSpeedUnits definiuje jednostki prędkości wiatru:
+        /// - K: km/h (kilometry na godzinę)
+        /// - M: m/h (metry na godzinę)
+        /// - N: Węzły
+        /// - S: mph (mile na godzinę)
         /// </summary>
         public enum WindSpeedUnits
         {
-            K, // km/h
-            M, // m/h
-            N, // Węzły
-            S  // mph
+            K,
+            M,
+            N,
+            S
         }
 
         /// <summary>
-        /// Definiuje odniesienie dla kąta i prędkości wiatru.
+        /// Enum Reference definiuje odniesienie dla kąta i prędkości wiatru:
+        /// - R: Względne (względem ruchu statku)
+        /// - T: Teoretyczne (jakby statek był nieruchomy)
         /// </summary>
         public enum Reference
         {
-            R, // Względne (względem ruchu statku)
-            T  // Teoretyczne (jakby statek był nieruchomy)
+            R,
+            T
         }
 
         /// <summary>
-        /// Definiuje status wiadomości.
+        /// Enum Status definiuje status ważności danych:
+        /// - A: Dane są ważne
+        /// - V: Dane są nieważne
         /// </summary>
         public enum Status
         {
-            A, // Dane są ważne
-            V  // Dane są nieważne
+            A,
+            V
         }
     }
-
 }
